@@ -20,7 +20,6 @@ const useGame = () => {
     const { x, y } = getRandomCoordinates();
     let direction = getRandomDirection();
     const { size } = ships[shipId];
-    console.log(size);
 
     if (outOfBounds([x, y], size, direction)) {
       return updateBattleShip(battleField, id, shipId);
