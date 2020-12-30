@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { GameContext } from 'components/GameContext';
-import { CELL_STATUS, gameSetup, ships } from 'gameUtils';
+import { gameSetup, updateBattleShip } from 'gameUtils';
 
 const useGame = () => {
   const [state, setState] = useContext(GameContext);
@@ -16,58 +16,11 @@ const useGame = () => {
     setState({ ...state, battleField: tmpBattlefield });
   }, []);
 
-  function updateBattleShip(battleField, id, shipId) {
-    const { x, y } = getRandomCoordinates();
-    let direction = getRandomDirection();
-    const { size } = ships[shipId];
+  // TODO: create useEffect to check/set SUNK ship when a cell status changed
 
-    if (outOfBounds([x, y], size, direction)) {
-      return updateBattleShip(battleField, id, shipId);
-    }
+  const onCellUpdate = () => null;
 
-    // insert ships
-    for (let i = 0; i < size; i++) {
-      if (direction === 'right') {
-        if (positionNotFree(battleField[x + i][y])) {
-          return updateBattleShip(battleField, id, shipId);
-        }
-        battleField[x + i][y] = { status: CELL_STATUS.SHIP, id: id };
-      } else {
-        if (positionNotFree(battleField[x][y + i])) {
-          return updateBattleShip(battleField, id, shipId);
-        }
-        battleField[x][y + i] = { status: CELL_STATUS.SHIP, id: id };
-      }
-    }
-    return battleField;
-
-    function getRandomCoordinates() {
-      const x = Math.floor(Math.random() * 10);
-      const y = Math.floor(Math.random() * 10);
-
-      return { x, y };
-    }
-
-    function getRandomDirection() {
-      const directions = ['right', 'down'];
-      const random = Math.floor(Math.random() * directions.length);
-      return directions[random];
-    }
-
-    function outOfBounds(start, shipSize, direction) {
-      let max = 9;
-      if (direction === 'right') {
-        return start[0] + shipSize - 1 > max;
-      }
-      return start[1] + shipSize - 1 > max;
-    }
-
-    function positionNotFree({ status }) {
-      return status !== null;
-    }
-  }
-
-  return { state };
+  return { state, onCellUpdate };
 };
 
 export default useGame;

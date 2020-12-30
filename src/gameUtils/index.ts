@@ -38,3 +38,64 @@ export const gameSetup = {
   '2': { id: 2, shipId: 3 },
   '1': { id: 1, shipId: 4 },
 };
+
+export const updateBattleShip = (battleField, id, shipId) => {
+  const { x, y } = getRandomCoordinates();
+  let direction = getRandomDirection();
+  const { size } = ships[shipId];
+
+  if (outOfBounds([x, y], size, direction)) {
+    return updateBattleShip(battleField, id, shipId);
+  }
+
+  // insert ships
+  for (let i = 0; i < size; i++) {
+    if (direction === 'right') {
+      if (positionNotFree(battleField[x + i][y])) {
+        return updateBattleShip(battleField, id, shipId);
+      }
+      battleField[x + i][y] = { status: CELL_STATUS.SHIP, id: id };
+    } else {
+      if (positionNotFree(battleField[x][y + i])) {
+        return updateBattleShip(battleField, id, shipId);
+      }
+      battleField[x][y + i] = { status: CELL_STATUS.SHIP, id: id };
+    }
+  }
+  return battleField;
+
+  function getRandomCoordinates() {
+    const x = Math.floor(Math.random() * 10);
+    const y = Math.floor(Math.random() * 10);
+
+    return { x, y };
+  }
+
+  function getRandomDirection() {
+    const directions = ['right', 'down'];
+    const random = Math.floor(Math.random() * directions.length);
+    return directions[random];
+  }
+
+  function outOfBounds(start, shipSize, direction) {
+    let max = 9;
+    if (direction === 'right') {
+      return start[0] + shipSize - 1 > max;
+    }
+    return start[1] + shipSize - 1 > max;
+  }
+
+  function positionNotFree({ status }) {
+    return status !== null;
+  }
+};
+
+export const updateToNewStatus = (currentStatus: number | null) => {
+  // SWITCH CASE FUNCTION
+  // if WATER change to MISS
+  // if SHIP change to HIT
+  // if MISS do nothing
+  // if HIT do nothing
+  // if SUNK do nothing
+  return CELL_STATUS.WATER;
+};
