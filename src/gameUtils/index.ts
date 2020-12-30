@@ -39,6 +39,32 @@ export const gameSetup = {
   '1': { id: 1, shipId: 4 },
 };
 
+// GAME UTILS
+const getRandomCoordinates = () => {
+  const x = Math.floor(Math.random() * 10);
+  const y = Math.floor(Math.random() * 10);
+
+  return { x, y };
+};
+
+const getRandomDirection = () => {
+  const directions = ['right', 'down'];
+  const random = Math.floor(Math.random() * directions.length);
+  return directions[random];
+};
+
+const outOfBounds = (start, shipSize, direction) => {
+  let max = 9;
+  if (direction === 'right') {
+    return start[0] + shipSize - 1 > max;
+  }
+  return start[1] + shipSize - 1 > max;
+};
+
+const positionNotFree = ({ status }) => {
+  return status !== null;
+};
+
 export const updateBattleShip = (battleField, id, shipId) => {
   const { x, y } = getRandomCoordinates();
   let direction = getRandomDirection();
@@ -63,31 +89,6 @@ export const updateBattleShip = (battleField, id, shipId) => {
     }
   }
   return battleField;
-
-  function getRandomCoordinates() {
-    const x = Math.floor(Math.random() * 10);
-    const y = Math.floor(Math.random() * 10);
-
-    return { x, y };
-  }
-
-  function getRandomDirection() {
-    const directions = ['right', 'down'];
-    const random = Math.floor(Math.random() * directions.length);
-    return directions[random];
-  }
-
-  function outOfBounds(start, shipSize, direction) {
-    let max = 9;
-    if (direction === 'right') {
-      return start[0] + shipSize - 1 > max;
-    }
-    return start[1] + shipSize - 1 > max;
-  }
-
-  function positionNotFree({ status }) {
-    return status !== null;
-  }
 };
 
 export const updateToNewStatus = (currentStatus: number | null) => {
