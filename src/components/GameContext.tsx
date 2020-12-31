@@ -8,7 +8,8 @@ interface IProviderProps {
 export const defaultState = {
   battleField: createMap(),
   ships,
-  battleFieldShips: [],
+  battleFieldShips: null,
+  // turns: 99,
 };
 
 const GameContext = createContext(null);

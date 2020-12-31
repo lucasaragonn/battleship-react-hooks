@@ -1,9 +1,18 @@
 .cell {
-  background-color: aqua;
   width: 30px;
   height: 30px;
   border: 1px solid #fff;
   padding: 10px;
   text-align: center;
   cursor: pointer;
+  background-color:cornflowerblue;
+  &.miss {
+    background-color: darkgray;
+  }
+  &.hit {
+    background-color: royalblue
+  }
+  &.sunk {
+    background-color: darkred;
+  }
 }

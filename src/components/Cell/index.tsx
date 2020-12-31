@@ -1,6 +1,7 @@
 import React from 'react';
 import useCell from 'components/hooks/useCell';
 import { getNextStatus } from 'gameUtils';
+import classNames from 'classnames';
 import styles from './index.module.scss';
 
 interface ICell {
@@ -23,9 +24,16 @@ const Cell = ({ item }: CellProps) => {
     }
   };
 
+  const classes = classNames({
+    [styles.cell]: true,
+    [styles.miss]: item.status === 2,
+    [styles.hit]: item.status === 3,
+    [styles.sunk]: item.status === 4,
+  });
+
   return (
-    <div className={styles.cell} onClick={() => onClick(item)}>
-      <div className="status">{item.id}</div>
+    <div className={classes} onClick={() => onClick(item)}>
+      <div className="status"></div>
     </div>
   );
 };
