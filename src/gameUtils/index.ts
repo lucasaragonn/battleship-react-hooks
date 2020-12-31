@@ -13,7 +13,7 @@ export const createMap = () => {
   for (let i = 0; i <= rows; i++) {
     map[i] = [];
     for (let j = 0; j <= cols; j++) {
-      map[i][j] = { status: CELL_STATUS.WATER, id: null };
+      map[i][j] = { status: CELL_STATUS.WATER, id: null, position: [i, j] };
     }
   }
   return map;
@@ -80,23 +80,39 @@ export const updateBattleShip = (battleField, id, shipId) => {
       if (positionNotFree(battleField[x + i][y])) {
         return updateBattleShip(battleField, id, shipId);
       }
-      battleField[x + i][y] = { status: CELL_STATUS.SHIP, id: id };
+      battleField[x + i][y] = {
+        status: CELL_STATUS.SHIP,
+        id: id,
+        position: [x + i, y],
+      };
     } else {
       if (positionNotFree(battleField[x][y + i])) {
         return updateBattleShip(battleField, id, shipId);
       }
-      battleField[x][y + i] = { status: CELL_STATUS.SHIP, id: id };
+      battleField[x][y + i] = {
+        status: CELL_STATUS.SHIP,
+        id: id,
+        position: [x, y + i],
+      };
     }
   }
   return battleField;
 };
 
-export const updateToNewStatus = (currentStatus: number | null) => {
-  // SWITCH CASE FUNCTION
-  // if WATER change to MISS
-  // if SHIP change to HIT
-  // if MISS do nothing
-  // if HIT do nothing
-  // if SUNK do nothing
+export const getNextStatus = (currentStatus: number | null) => {
+  switch (currentStatus) {
+    case CELL_STATUS.WATER:
+      return CELL_STATUS.MISS;
+    case CELL_STATUS.SHIP:
+      return CELL_STATUS.HIT;
+    case CELL_STATUS.MISS:
+      return CELL_STATUS.MISS;
+    case CELL_STATUS.HIT:
+      return CELL_STATUS.HIT;
+    case CELL_STATUS.SUNK:
+      return CELL_STATUS.SUNK;
+    default:
+      break;
+  }
   return CELL_STATUS.WATER;
 };

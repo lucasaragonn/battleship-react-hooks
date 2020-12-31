@@ -16,11 +16,7 @@ const useGame = () => {
     setState({ ...state, battleField: tmpBattlefield });
   }, []);
 
-  // TODO: create useEffect to check/set SUNK ship when a cell status changed
-
-  const onCellUpdate = () => null;
-
-  return { state, onCellUpdate };
+  return { state };
 };
 
 export default useGame;
