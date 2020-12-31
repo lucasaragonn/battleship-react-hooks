@@ -6,7 +6,7 @@ const useGame = () => {
   const [state, setState] = useContext(GameContext);
 
   useEffect(() => {
-    let { battleField, battleFieldShips } = state;
+    let { battleField } = state;
     let tmpBattleFieldShips = {};
     let tmpBattlefield = [...battleField];
 
@@ -31,14 +31,12 @@ const useGame = () => {
     });
   }, []);
 
-  // Check for sunk ships
-  useEffect(() => {
-    console.log(
-      'check for sunk ships in some game setup with shiId as key and hits as value',
-      'setSunk() isSunk Bool'
-    );
-  }, [state]); // TODO: allow state.battleField as dep
+  //   Plan B for update battleShips
+  // const battleFieldShips = state;
 
+  // useEffect(() => {
+  //   console.log(battleFieldShips);
+  // }, [battleFieldShips]);
   return { state };
 };
 

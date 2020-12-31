@@ -4,18 +4,18 @@ import { getNextStatus } from 'gameUtils';
 import classNames from 'classnames';
 import styles from './index.module.scss';
 
-interface ICell {
+export interface ICell {
   id: number;
   status: number | null;
   position?: [number, number];
 }
 
-interface CellProps {
+export interface CellProps {
   item: ICell;
 }
 
 const Cell = ({ item }: CellProps) => {
-  const { updateCell } = useCell();
+  const { updateCell } = useCell(item);
 
   const onClick = (cell: ICell) => {
     const newStatus = getNextStatus(cell.status);
