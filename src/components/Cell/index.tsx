@@ -1,12 +1,12 @@
-import React from 'react';
-import useCell from 'components/hooks/useCell';
-import { getNextStatus } from 'gameUtils';
+import React, { useContext, useEffect, useState } from 'react';
+import { CELL_STATUS, getNextStatus } from 'gameUtils';
 import classNames from 'classnames';
 import styles from './index.module.scss';
+import { GameContext } from 'components/GameContext';
 
 export interface ICell {
   id: number;
-  status: number | null;
+  status: number;
   position?: [number, number];
 }
 
@@ -15,25 +15,67 @@ export interface CellProps {
 }
 
 const Cell = ({ item }: CellProps) => {
-  const { updateCell } = useCell(item);
+  const [cell, setCell] = useState<ICell>(item);
+  const [sunk, setSunk] = useState<boolean>(false);
+  const [state, setState] = useContext(GameContext); // think to separate battleShips to different global state
 
-  const onClick = (cell: ICell) => {
-    const newStatus = getNextStatus(cell.status);
-    if (cell.status !== newStatus) {
-      updateCell({ status: newStatus, position: cell.position });
+  useEffect(() => {
+    setCell(item);
+  }, [item]);
+
+  useEffect(() => {
+    if (state.battleFieldShips !== null) {
+      const { id } = cell;
+      const { shipId } = state.battleFieldShips[id];
+
+      const currentHits = state.battleFieldShips[id].hits + 1;
+      const size = state.ships[shipId].size;
+
+      let tmpBattleFieldShips;
+
+      if (currentHits === size) {
+        tmpBattleFieldShips = {
+          ...state.battleFieldShips,
+          [id]: { ...state.battleFieldShips[id], isSunk: true },
+        };
+      } else {
+        tmpBattleFieldShips = {
+          ...state.battleFieldShips,
+          [id]: { ...state.battleFieldShips[id], hits: currentHits },
+        };
+      }
+      setState({ ...state, battleFieldShips: tmpBattleFieldShips });
+    }
+  }, [cell.status === CELL_STATUS.HIT]);
+
+  useEffect(() => {
+    if (
+      state.battleFieldShips !== null &&
+      state.battleFieldShips[cell.id] !== undefined
+    ) {
+      if (state.battleFieldShips[cell.id].isSunk) {
+        setSunk(true);
+      }
+    }
+  }, [state.battleFieldShips]);
+
+  const onClick = (c: ICell) => {
+    const newStatus = getNextStatus(c.status);
+    if (c.status !== newStatus) {
+      setCell({ ...cell, status: newStatus });
     }
   };
 
   const classes = classNames({
     [styles.cell]: true,
-    [styles.miss]: item.status === 2,
-    [styles.hit]: item.status === 3,
-    [styles.sunk]: item.status === 4,
+    [styles.miss]: cell.status === CELL_STATUS.MISS,
+    [styles.hit]: cell.status === CELL_STATUS.HIT && !sunk,
+    [styles.sunk]: sunk,
   });
 
   return (
-    <div className={classes} onClick={() => onClick(item)}>
-      <div className="status"></div>
+    <div className={classes} onClick={() => onClick(cell)}>
+      <div className="status">{cell.id}</div>
     </div>
   );
 };

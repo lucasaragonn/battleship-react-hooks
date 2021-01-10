@@ -4,6 +4,7 @@ export const CELL_STATUS = {
   MISS: 2,
   HIT: 3,
   SUNK: 4,
+  asdf: 444,
 };
 
 export const createMap = () => {

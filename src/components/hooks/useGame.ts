@@ -3,7 +3,7 @@ import { GameContext } from 'components/GameContext';
 import { gameSetup, ships, updateBattleShip } from 'gameUtils';
 
 const useGame = () => {
-  const [state, setState] = useContext(GameContext);
+  const [state, setState] = useContext(GameContext); // game, setGame
 
   useEffect(() => {
     let { battleField } = state;
@@ -18,8 +18,9 @@ const useGame = () => {
         ...tmpBattleFieldShips,
         [id]: {
           id,
-          hits: ships[shipId].size,
+          hits: 0,
           isSunk: false,
+          shipId,
         },
       };
     }
@@ -31,12 +32,6 @@ const useGame = () => {
     });
   }, []);
 
-  //   Plan B for update battleShips
-  // const battleFieldShips = state;
-
-  // useEffect(() => {
-  //   console.log(battleFieldShips);
-  // }, [battleFieldShips]);
   return { state };
 };
 

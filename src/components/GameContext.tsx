@@ -9,7 +9,6 @@ export const defaultState = {
   battleField: createMap(),
   ships,
   battleFieldShips: null,
-  // turns: 99,
 };
 
 const GameContext = createContext(null);
