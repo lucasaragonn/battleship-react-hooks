@@ -1,9 +1,9 @@
 import { useContext, useEffect } from 'react';
 import { GameContext } from 'components/GameContext';
-import { gameSetup, ships, updateBattleShip } from 'gameUtils';
+import { gameSetup, updateBattleShip } from 'gameUtils';
 
 const useGame = () => {
-  const [state, setState] = useContext(GameContext); // game, setGame
+  const [state, setState] = useContext(GameContext);
 
   useEffect(() => {
     let { battleField } = state;
@@ -34,27 +34,28 @@ const useGame = () => {
   }, []);
 
   useEffect(() => {
-    /// DEJAR LINDO ESTO POR DIO
     const { battleFieldShips } = state;
 
-    const filtered =
+    const filteredNotSunk =
       battleFieldShips !== null &&
       Object.entries(battleFieldShips)
         .map((item) => item[1])
         .filter((bs: any) => bs.isSunk === false);
 
-    if (state.turns <= 0 && battleFieldShips && filtered.length > 0) {
+    if (filteredNotSunk.length <= 0) {
       setTimeout(() => {
-        alert('Game Over!');
+        setState({ ...state, finished: true });
+      }, 100);
+      console.log('you won');
+      return;
+    }
+
+    if (state.turns <= 0 && filteredNotSunk.length > 0) {
+      setTimeout(() => {
         return setState({ ...state, finished: true });
-      }, 500);
-    } else {
-      if (filtered.length <= 0) {
-        setTimeout(() => {
-          alert('You Won!');
-          return setState({ ...state, finished: true });
-        }, 500);
-      }
+      }, 100);
+      console.log('game over');
+      return;
     }
   }, [state.battleFieldShips]);
 

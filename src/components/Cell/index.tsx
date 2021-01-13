@@ -15,10 +15,12 @@ export interface CellProps {
 }
 
 const Cell = ({ item }: CellProps) => {
+  // TODO: think to separate battleShips to different global state
   const [cell, setCell] = useState<ICell>(item);
   const [sunk, setSunk] = useState<boolean>(false);
-  const [state, setState] = useContext(GameContext); // think to separate battleShips to different global state
+  const [state, setState] = useContext(GameContext);
 
+  // TODO: MOVER LO NECESARIO A CUSTOM HOOK useCell
   useEffect(() => {
     setCell(item);
   }, [item]);
@@ -58,10 +60,6 @@ const Cell = ({ item }: CellProps) => {
       }
     }
   }, [state.battleFieldShips]);
-
-  useEffect(() => {
-    console.log('sunk!');
-  }, [sunk]); // seria aqui esto ? o mas del game ?
 
   const onClick = (c: ICell) => {
     const newStatus = getNextStatus(c.status);
