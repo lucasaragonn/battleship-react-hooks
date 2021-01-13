@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { CELL_STATUS, getNextStatus } from 'gameUtils';
+import { GameContext } from 'components/GameContext';
 import classNames from 'classnames';
 import styles from './index.module.scss';
-import { GameContext } from 'components/GameContext';
 
 export interface ICell {
   id: number;
@@ -59,10 +59,15 @@ const Cell = ({ item }: CellProps) => {
     }
   }, [state.battleFieldShips]);
 
+  useEffect(() => {
+    console.log('sunk!');
+  }, [sunk]); // seria aqui esto ? o mas del game ?
+
   const onClick = (c: ICell) => {
     const newStatus = getNextStatus(c.status);
     if (c.status !== newStatus) {
-      setCell({ ...cell, status: newStatus });
+      setCell({ ...cell, status: newStatus }); // add callback here to decrease state.turns
+      setState({ ...state, turns: state.turns - 1 }); // this is wrong
     }
   };
 

@@ -7,7 +7,9 @@ const Battleship = () => {
   const { state } = useGame();
   return (
     <div className={styles.gameContainer}>
-      <Game battleField={state.battleField} />
+      {/* Panel HERE: Count y barquitos*/}
+      <h1>{state.turns}</h1>
+      <Game disabled={state.finished} battleField={state.battleField} />
     </div>
   );
 };

@@ -1,8 +1,10 @@
 .battleField {
   display: flex;
   border: 1px solid;
+  opacity: 1;
+}
 
-  .row {
-    
-  }
+.gameDisabled {
+  pointer-events: none;
+  opacity: 0.5;
 }

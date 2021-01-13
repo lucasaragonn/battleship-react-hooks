@@ -1,14 +1,21 @@
 import React from 'react';
-import styles from './index.module.scss';
 import Cell from 'components/Cell';
+import classnames from 'classnames';
+import styles from './index.module.scss';
 
 interface GameProps {
   battleField: []; // create inteface
+  disabled: boolean;
 }
 
-const Game = ({ battleField }: GameProps) => {
+const Game = ({ battleField, disabled }: GameProps) => {
+  const classes = classnames({
+    [styles.battleField]: true,
+    [styles.gameDisabled]: disabled,
+  });
+
   return (
-    <div className={styles.battleField}>
+    <div className={classes}>
       {battleField.map((row: any, i: number) => {
         return (
           <div className={styles.row} key={i}>
