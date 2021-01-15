@@ -75,7 +75,7 @@ export const updateBattleShip = (battleField, id, shipId) => {
     return updateBattleShip(battleField, id, shipId);
   }
 
-  // insert ships
+  // insert ships // TODO FIX DUPLICATE CONDITION
   for (let i = 0; i < size; i++) {
     if (direction === 'right') {
       if (positionNotFree(battleField[x + i][y])) {

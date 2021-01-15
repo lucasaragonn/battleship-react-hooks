@@ -1,9 +1,10 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { GameContext } from 'components/GameContext';
 import { gameSetup, updateBattleShip } from 'gameUtils';
 
 const useGame = () => {
   const [state, setState] = useContext(GameContext);
+  const [remainingShips, setRemainingShips] = useState(0);
 
   useEffect(() => {
     let { battleField } = state;
@@ -34,32 +35,25 @@ const useGame = () => {
   }, []);
 
   useEffect(() => {
+    console.log('state');
     const { battleFieldShips } = state;
 
-    const filteredNotSunk =
+    const ships =
       battleFieldShips !== null &&
       Object.entries(battleFieldShips)
         .map((item) => item[1])
         .filter((bs: any) => bs.isSunk === false);
 
-    if (filteredNotSunk.length <= 0) {
+    if (ships.length <= 0 || (state.turns <= 0 && ships.length > 0)) {
       setTimeout(() => {
         setState({ ...state, finished: true });
       }, 100);
-      console.log('you won');
-      return;
     }
 
-    if (state.turns <= 0 && filteredNotSunk.length > 0) {
-      setTimeout(() => {
-        return setState({ ...state, finished: true });
-      }, 100);
-      console.log('game over');
-      return;
-    }
+    setRemainingShips(ships.length);
   }, [state.battleFieldShips]);
 
-  return { state };
+  return { state, remainingShips };
 };
 
 export default useGame;
