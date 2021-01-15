@@ -66,6 +66,16 @@ const positionNotFree = ({ status }) => {
   return status !== null;
 };
 
+export const getRemainingShips = (battleFieldShips) => {
+  const remainingShips =
+    battleFieldShips !== null &&
+    Object.entries(battleFieldShips)
+      .map((item) => item[1])
+      .filter((bs: any) => bs.isSunk === false); // create interface for { isSunk: boolean }
+
+  return remainingShips.length;
+};
+
 export const updateBattleShip = (battleField, id, shipId) => {
   const { x, y } = getRandomCoordinates();
   let direction = getRandomDirection();

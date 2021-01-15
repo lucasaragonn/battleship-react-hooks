@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { GameContext } from 'components/GameContext';
-import { gameSetup, updateBattleShip } from 'gameUtils';
+import { gameSetup, getRemainingShips, updateBattleShip } from 'gameUtils';
 
 const useGame = () => {
   const [state, setState] = useContext(GameContext);
@@ -35,22 +35,14 @@ const useGame = () => {
   }, []);
 
   useEffect(() => {
-    console.log('state');
-    const { battleFieldShips } = state;
+    const ships = getRemainingShips(state.battleFieldShips);
+    setRemainingShips(ships);
 
-    const ships =
-      battleFieldShips !== null &&
-      Object.entries(battleFieldShips)
-        .map((item) => item[1])
-        .filter((bs: any) => bs.isSunk === false);
-
-    if (ships.length <= 0 || (state.turns <= 0 && ships.length > 0)) {
+    if (ships <= 0 || (state.turns <= 0 && ships > 0)) {
       setTimeout(() => {
         setState({ ...state, finished: true });
       }, 100);
     }
-
-    setRemainingShips(ships.length);
   }, [state.battleFieldShips]);
 
   return { state, remainingShips };
