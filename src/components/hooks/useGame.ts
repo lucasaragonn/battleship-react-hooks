@@ -6,6 +6,8 @@ const useGame = () => {
   const [state, setState] = useContext(GameContext);
   const [remainingShips, setRemainingShips] = useState(0);
 
+  const { battleField, turns, finished } = state;
+
   useEffect(() => {
     let { battleField } = state;
     let tmpBattleFieldShips = {};
@@ -45,7 +47,7 @@ const useGame = () => {
     }
   }, [state.battleFieldShips]);
 
-  return { state, remainingShips };
+  return { battleField, turns, finished, remainingShips };
 };
 
 export default useGame;
