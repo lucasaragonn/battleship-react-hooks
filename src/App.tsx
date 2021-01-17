@@ -8,12 +8,16 @@ import Won from 'components/Won';
 import Battleship from './components/Battleship';
 
 function App() {
-  // useGame here
   return (
     <GameProvider>
       <Switch>
         <Route exact path="/">
-          <Menu />
+          <Menu
+            items={[
+              { text: 'Play', link: '/game' },
+              { text: 'Settings', link: '/settings' },
+            ]}
+          />
         </Route>
         <Route path="/settings">
           <Settings />

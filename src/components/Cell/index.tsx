@@ -26,6 +26,10 @@ const Cell = ({ item }: CellProps) => {
   }, [item]);
 
   useEffect(() => {
+    setState({ ...state, turns: state.turns - 1 });
+  }, [cell.status === CELL_STATUS.MISS]);
+
+  useEffect(() => {
     if (state.battleFieldShips !== null) {
       const { id } = cell;
       const { shipId } = state.battleFieldShips[id];
@@ -46,7 +50,11 @@ const Cell = ({ item }: CellProps) => {
           [id]: { ...state.battleFieldShips[id], hits: currentHits },
         };
       }
-      setState({ ...state, battleFieldShips: tmpBattleFieldShips });
+      setState({
+        ...state,
+        battleFieldShips: tmpBattleFieldShips,
+        turns: state.turns - 1,
+      });
     }
   }, [cell.status === CELL_STATUS.HIT]);
 
@@ -65,7 +73,6 @@ const Cell = ({ item }: CellProps) => {
     const newStatus = getNextStatus(c.status);
     if (c.status !== newStatus) {
       setCell({ ...cell, status: newStatus }); // add callback here to decrease state.turns
-      setState({ ...state, turns: state.turns - 1 }); // this is wrong
     }
   };
 

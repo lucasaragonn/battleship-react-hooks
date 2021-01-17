@@ -1,6 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import { GameContext } from 'components/GameContext';
-import { gameSetup, getRemainingShips, updateBattleShip } from 'gameUtils';
+import {
+  createMap,
+  gameSetup,
+  getRemainingShips,
+  updateBattleShip,
+} from 'gameUtils';
 
 const useGame = () => {
   const [state, setState] = useContext(GameContext);
@@ -9,9 +14,8 @@ const useGame = () => {
   const { battleField, turns, finished } = state;
 
   useEffect(() => {
-    let { battleField } = state;
     let tmpBattleFieldShips = {};
-    let tmpBattlefield = [...battleField];
+    let tmpBattlefield = [...createMap()];
 
     for (let [, ship] of Object.entries(gameSetup)) {
       const { id, shipId } = ship;
@@ -45,7 +49,7 @@ const useGame = () => {
         setState({ ...state, finished: true });
       }, 100);
     }
-  }, [state.battleFieldShips]);
+  }, [state.turns]);
 
   return { battleField, turns, finished, remainingShips };
 };
