@@ -1,5 +1,5 @@
 import React from 'react';
 
-const Settings = () => <div>Settings</div>;
+const Settings = ({ turns }: any) => <div>Settings</div>;
 
 export default Settings;
