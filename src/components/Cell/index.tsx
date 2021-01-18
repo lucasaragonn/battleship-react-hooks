@@ -20,7 +20,6 @@ const Cell = ({ item }: CellProps) => {
   const [sunk, setSunk] = useState<boolean>(false);
   const [state, setState] = useContext(GameContext);
 
-  // TODO: MOVER LO NECESARIO A CUSTOM HOOK useCell
   useEffect(() => {
     setCell(item);
   }, [item]);
@@ -72,7 +71,7 @@ const Cell = ({ item }: CellProps) => {
   const onClick = (c: ICell) => {
     const newStatus = getNextStatus(c.status);
     if (c.status !== newStatus) {
-      setCell({ ...cell, status: newStatus }); // add callback here to decrease state.turns
+      setCell({ ...cell, status: newStatus });
     }
   };
 

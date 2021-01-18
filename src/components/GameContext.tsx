@@ -9,7 +9,7 @@ export const defaultState = {
   battleField: createMap(),
   ships,
   battleFieldShips: null,
-  turns: null,
+  turns: 20,
   finished: false,
   remainingShips: null,
 };

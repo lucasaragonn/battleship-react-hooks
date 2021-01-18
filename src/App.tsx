@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { GameProvider } from './components/GameContext';
-import useGame from 'components/hooks/useGame';
 import GameOver from 'components/GameOver';
 import Menu from 'components/Menu';
 import Settings from 'components/Settings';
