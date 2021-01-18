@@ -1,15 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import Panel from 'components/Panel';
-import { GameContext } from 'components/GameContext';
 import Game from '../Game';
 import styles from './index.module.scss';
+import useGame from 'components/hooks/useGame';
 
-const Battleship = ({ battleField, turns }: any) => {
-  const [state, setState] = useContext(GameContext);
+const Battleship = () => {
+  const { battleField, turns, finished, remainingShips } = useGame();
   return (
     <div className={styles.gameContainer}>
-      <Panel turns={turns} ships={state.remainingShips} />
-      <Game disabled={state.finished} battleField={battleField} />
+      <Panel turns={turns} ships={remainingShips} />
+      <Game disabled={finished} battleField={battleField} />
     </div>
   );
 };
