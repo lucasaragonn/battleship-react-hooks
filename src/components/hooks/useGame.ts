@@ -9,9 +9,10 @@ import {
 import useLocalStorageState from './useLocalStorage';
 
 const useGame = () => {
+  // TODO: BORRAR EL HOOK Y USAR LOCALSTORAGE DIRECTO
   const [remainingShips, setRemainingShips] = useState(0);
   const [state, setState] = useContext(GameContext);
-  const { value, setValue } = useLocalStorageState('turns', '');
+  const [value, setValue] = useLocalStorageState('turns', '');
 
   const { battleField, turns, finished } = state;
 

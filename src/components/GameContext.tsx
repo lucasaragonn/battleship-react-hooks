@@ -11,7 +11,7 @@ export const defaultState = {
   battleFieldShips: null,
   turns: 20,
   finished: false,
-  remainingShips: null,
+  easyMode: false,
 };
 
 const GameContext = createContext(null);
