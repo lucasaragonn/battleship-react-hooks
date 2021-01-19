@@ -1,0 +1,26 @@
+.game {
+  padding:0;
+}
+.gameDisabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+
+
+.won, .gameOver {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 300px;
+  width: 500px;
+  z-index: 9999;
+}
+
+.won {
+  background-color:greenyellow;
+
+}
+.gameOver {
+  background-color: red;
+}

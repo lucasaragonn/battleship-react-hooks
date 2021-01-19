@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import useLocalStorageState from 'components/hooks/useLocalStorage';
 import { GameContext } from 'components/GameContext';
 
@@ -57,6 +58,10 @@ const Settings = () => {
         <label htmlFor="easy">Easy Mode</label>
 
         <button onClick={save}>Save</button>
+      </div>
+
+      <div>
+        <Link to={'/'}>Back</Link>
       </div>
       {validationError !== null ? <div>{validationError}</div> : ''}
     </>
