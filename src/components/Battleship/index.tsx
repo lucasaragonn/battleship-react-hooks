@@ -5,11 +5,11 @@ import styles from './index.module.scss';
 import useGame from 'components/hooks/useGame';
 
 const Battleship = () => {
-  const { battleField, turns, finished, remainingShips } = useGame();
+  const { battleField, settings, finished, remainingShips } = useGame();
 
   return (
     <div className={styles.gameContainer}>
-      <Panel turns={turns} ships={remainingShips} />
+      <Panel turns={settings.turns} ships={remainingShips} />
       <Game disabled={finished} battleField={battleField} />
     </div>
   );

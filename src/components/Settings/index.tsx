@@ -4,12 +4,12 @@ import { GameContext } from 'components/GameContext';
 
 const Settings = () => {
   const [state, setState] = useContext(GameContext);
-  const [inputV, setInputV] = useState(state.turns);
+  const [inputV, setInputV] = useState(state.settings.turns);
   const [validationError, setValidationError] = useState(null);
 
   const [settings, setSettings] = useLocalStorageState(
     'settings',
-    `{"easyMode":false, "turns": ${state.turns}}`
+    JSON.stringify(state.settings)
   );
 
   useEffect(() => {

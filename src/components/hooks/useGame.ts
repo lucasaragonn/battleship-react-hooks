@@ -1,5 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { GameContext } from 'components/GameContext';
+import { useHistory } from 'react-router-dom';
+
 import {
   createMap,
   gameSetup,
@@ -9,19 +11,20 @@ import {
 import useLocalStorageState from './useLocalStorage';
 
 const useGame = () => {
-  // TODO: BORRAR EL HOOK Y USAR LOCALSTORAGE DIRECTO
   const [remainingShips, setRemainingShips] = useState(0);
   const [state, setState] = useContext(GameContext);
-  const [value, setValue] = useLocalStorageState('turns', '');
+  const [storage, setStorage] = useLocalStorageState('settings', ''); // CHANGE FOR SETTINGS
+  const history = useHistory();
 
-  const { battleField, turns, finished } = state;
+  const { battleField, settings, finished } = state;
 
   const getTurns = () => {
+    let parsedStorage = JSON.parse(storage);
     let t;
-    if (value) {
-      t = value;
+    if (parsedStorage.turns) {
+      t = parsedStorage.turns;
     } else {
-      t = turns;
+      t = settings.turns;
     }
     return t;
   };
@@ -45,6 +48,8 @@ const useGame = () => {
       };
     }
 
+    setRemainingShips(getRemainingShips(tmpBattleFieldShips));
+
     setState({
       ...state,
       battleField: tmpBattlefield,
@@ -59,19 +64,26 @@ const useGame = () => {
 
       setRemainingShips(ships);
 
-      if (ships <= 0 || (state.turns <= 0 && ships > 0)) {
+      if (ships <= 0 || (state.settings.turns <= 0 && ships > 0)) {
         setTimeout(() => {
           setState({ ...state, finished: true });
         }, 100);
       }
     }
-  }, [state.turns]);
+  }, [state.settings.turns]);
 
   useEffect(() => {
-    console.log(remainingShips <= 0 ? 'you won' : 'gameover');
-  }, [state.finished === true]);
+    if (state.finished === true) {
+      console.log('ended');
+    }
+  }, [state.finished]);
 
-  return { battleField, turns, finished, remainingShips };
+  return {
+    battleField,
+    settings: JSON.parse(storage) || state.settings,
+    finished,
+    remainingShips,
+  };
 };
 
 export default useGame;

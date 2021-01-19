@@ -15,7 +15,6 @@ export interface CellProps {
 }
 
 const Cell = ({ item }: CellProps) => {
-  // TODO: think to separate battleShips to different global state
   const [cell, setCell] = useState<ICell>(item);
   const [sunk, setSunk] = useState<boolean>(false);
   const [state, setState] = useContext(GameContext);
@@ -25,7 +24,10 @@ const Cell = ({ item }: CellProps) => {
   }, [item]);
 
   useEffect(() => {
-    setState({ ...state, turns: state.turns - 1 });
+    setState({
+      ...state,
+      settings: { ...state.settings, turns: state.settings.turns - 1 },
+    });
   }, [cell.status === CELL_STATUS.MISS]);
 
   useEffect(() => {
@@ -52,7 +54,7 @@ const Cell = ({ item }: CellProps) => {
       setState({
         ...state,
         battleFieldShips: tmpBattleFieldShips,
-        turns: state.turns - 1,
+        settings: { ...state.settings, turns: state.settings.turns - 1 },
       });
     }
   }, [cell.status === CELL_STATUS.HIT]);
