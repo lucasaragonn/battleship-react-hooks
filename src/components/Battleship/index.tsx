@@ -17,7 +17,7 @@ const Battleship = () => {
 
   return (
     <div className={styles.gameContainer}>
-      <Panel turns={settings.turns} ships={remainingShips} />
+      <Panel settings={settings} ships={remainingShips} />
       <Game status={gameStatus} disabled={finished} battleField={battleField} />
     </div>
   );

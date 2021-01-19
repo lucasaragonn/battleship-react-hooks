@@ -66,7 +66,10 @@ const useGame = () => {
 
       setRemainingShips(ships);
 
-      if (ships <= 0 || (settings.turns <= 0 && ships > 0)) {
+      if (
+        ships <= 0 ||
+        (settings.turns <= 0 && ships > 0 && !settings.easyMode)
+      ) {
         setTimeout(() => {
           setState({ ...state, finished: true });
         }, 100);
