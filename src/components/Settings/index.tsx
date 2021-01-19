@@ -9,29 +9,27 @@ const Settings = () => {
 
   const [settings, setSettings] = useLocalStorageState(
     'settings',
-    JSON.stringify(state.settings)
+    state.settings
   );
 
   useEffect(() => {
-    setInputV(JSON.parse(settings).turns);
-  }, [JSON.parse(settings).turns]);
+    setInputV(settings.turns);
+  }, [settings.turns]);
 
   const save = () => {
-    const parsedSettings = { ...JSON.parse(settings), turns: inputV };
     if (inputV < 10 || inputV % 1 !== 0) {
       return setValidationError(
         'You need to enter at least 20 turns and has to be an integer'
       );
     }
-    setSettings(JSON.stringify(parsedSettings));
+    setSettings({ ...settings, turns: inputV });
   };
 
   const updateMode = () => {
-    let parsedSettings = {
-      ...JSON.parse(settings),
-      easyMode: !JSON.parse(settings).easyMode,
-    };
-    setSettings(JSON.stringify(parsedSettings));
+    setSettings({
+      ...settings,
+      easyMode: !settings.easyMode,
+    });
   };
 
   return (
@@ -46,7 +44,7 @@ const Settings = () => {
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setInputV(e.currentTarget.value)
           }
-          disabled={JSON.parse(settings).easyMode}
+          disabled={settings.easyMode}
         />
 
         <input
@@ -54,7 +52,7 @@ const Settings = () => {
           type="checkbox"
           id="easy"
           name="easy"
-          checked={JSON.parse(settings).easyMode}
+          checked={settings.easyMode}
         />
         <label htmlFor="easy">Easy Mode</label>
 

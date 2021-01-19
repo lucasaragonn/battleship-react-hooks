@@ -3,6 +3,7 @@ import { CELL_STATUS, getNextStatus } from 'gameUtils';
 import { GameContext } from 'components/GameContext';
 import classNames from 'classnames';
 import styles from './index.module.scss';
+import useLocalStorageState from 'components/hooks/useLocalStorage';
 
 export interface ICell {
   id: number;
@@ -18,20 +19,26 @@ const Cell = ({ item }: CellProps) => {
   const [cell, setCell] = useState<ICell>(item);
   const [sunk, setSunk] = useState<boolean>(false);
   const [state, setState] = useContext(GameContext);
+  const [settingsFromStorage, setSettingsFromStorage] = useLocalStorageState(
+    'settings',
+    ''
+  );
 
   useEffect(() => {
     setCell(item);
   }, [item]);
 
   useEffect(() => {
+    const settings = state.settings;
     setState({
       ...state,
-      settings: { ...state.settings, turns: state.settings.turns - 1 },
+      settings: { ...state.settings, turns: settings.turns - 1 },
     });
   }, [cell.status === CELL_STATUS.MISS]);
 
   useEffect(() => {
     if (state.battleFieldShips !== null) {
+      const settings = state.settings;
       const { id } = cell;
       const { shipId } = state.battleFieldShips[id];
 
@@ -54,7 +61,7 @@ const Cell = ({ item }: CellProps) => {
       setState({
         ...state,
         battleFieldShips: tmpBattleFieldShips,
-        settings: { ...state.settings, turns: state.settings.turns - 1 },
+        settings: { ...state.settings, turns: settings.turns - 1 },
       });
     }
   }, [cell.status === CELL_STATUS.HIT]);

@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
 import { GameContext } from 'components/GameContext';
-import { useHistory } from 'react-router-dom';
 
 import {
   createMap,
@@ -13,20 +12,23 @@ import useLocalStorageState from './useLocalStorage';
 const useGame = () => {
   const [remainingShips, setRemainingShips] = useState(0);
   const [state, setState] = useContext(GameContext);
-  const [storage, setStorage] = useLocalStorageState('settings', ''); // CHANGE FOR SETTINGS
-  const history = useHistory();
+  const [settingsFromStorage, setSettingsFromStorage] = useLocalStorageState(
+    'settings',
+    null
+  );
 
-  const { battleField, settings, finished } = state;
+  const { battleField, finished, settings } = state;
 
-  const getTurns = () => {
-    let parsedStorage = JSON.parse(storage);
-    let t;
-    if (parsedStorage.turns) {
-      t = parsedStorage.turns;
+  const checkGameStatus = () => {
+    let gameStatus;
+    if (remainingShips <= 0 && finished) {
+      gameStatus = 'won';
+    } else if (settings.turns <= 0 && remainingShips > 0 && finished) {
+      gameStatus = 'gameOver';
     } else {
-      t = settings.turns;
+      gameStatus = undefined;
     }
-    return t;
+    return gameStatus;
   };
 
   useEffect(() => {
@@ -54,7 +56,7 @@ const useGame = () => {
       ...state,
       battleField: tmpBattlefield,
       battleFieldShips: tmpBattleFieldShips,
-      turns: getTurns(),
+      settings: settingsFromStorage ? settingsFromStorage : settings,
     });
   }, []);
 
@@ -64,25 +66,20 @@ const useGame = () => {
 
       setRemainingShips(ships);
 
-      if (ships <= 0 || (state.settings.turns <= 0 && ships > 0)) {
+      if (ships <= 0 || (settings.turns <= 0 && ships > 0)) {
         setTimeout(() => {
           setState({ ...state, finished: true });
         }, 100);
       }
     }
-  }, [state.settings.turns]);
-
-  useEffect(() => {
-    if (state.finished === true) {
-      console.log('ended');
-    }
-  }, [state.finished]);
+  }, [settings.turns]);
 
   return {
     battleField,
-    settings: JSON.parse(storage) || state.settings,
+    settings,
     finished,
     remainingShips,
+    checkGameStatus,
   };
 };
 
