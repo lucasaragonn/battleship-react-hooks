@@ -1,5 +1,5 @@
-import { url } from 'inspector';
 import React from 'react';
+import styles from './menu.module.scss';
 
 interface MenuItems {
   text: string;
@@ -8,13 +8,16 @@ interface MenuItems {
 
 const Menu = ({ items }: { items: MenuItems[] }) => {
   return (
-    <ul>
-      {items.map((item, i) => (
-        <li key={i}>
-          <a href={item.link}>{item.text}</a>
-        </li>
-      ))}
-    </ul>
+    <div className={styles.menu}>
+      <h1>BattleShip Game</h1>
+      <ul>
+        {items.map((item, i) => (
+          <li key={i}>
+            <a href={item.link}>{item.text}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 

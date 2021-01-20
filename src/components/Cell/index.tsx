@@ -2,8 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { CELL_STATUS, getNextStatus } from 'gameUtils';
 import { GameContext } from 'components/GameContext';
 import classNames from 'classnames';
-import styles from './index.module.scss';
-import useLocalStorageState from 'components/hooks/useLocalStorage';
+import styles from './cell.module.scss';
 
 export interface ICell {
   id: number;
@@ -19,10 +18,6 @@ const Cell = ({ item }: CellProps) => {
   const [cell, setCell] = useState<ICell>(item);
   const [sunk, setSunk] = useState<boolean>(false);
   const [state, setState] = useContext(GameContext);
-  const [settingsFromStorage, setSettingsFromStorage] = useLocalStorageState(
-    'settings',
-    ''
-  );
 
   useEffect(() => {
     setCell(item);

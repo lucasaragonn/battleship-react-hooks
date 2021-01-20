@@ -1,0 +1,17 @@
+.panel {
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-top: 16px;
+
+  @media(min-width: 1024px) {
+    margin-left: 64px;
+    margin-right: 64px;
+    margin-top: 32px;
+  }
+
+  h1 {
+    @media(min-width: 1024px) {
+      font-size: 40px;
+    }
+  }
+}

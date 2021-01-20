@@ -1,5 +1,8 @@
 .battleField {
   display: flex;
-  border: 1px solid;
   opacity: 1;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  margin-top: 64px;
 }

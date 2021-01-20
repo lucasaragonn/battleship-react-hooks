@@ -11,23 +11,15 @@ interface GameProps {
   status: 'won' | 'gameOver' | undefined;
 }
 
-const Won = () => {
+const Modal = ({ content }: { content: string }) => {
   const history = useHistory();
   return (
-    <div className={styles.won}>
-      <h1>You Win!</h1>
-      <button onClick={() => history.push('/')}>Main Menu</button>
-    </div>
-  );
-};
-
-const GameOver = () => {
-  const history = useHistory();
-  return (
-    <div className={styles.gameOver}>
-      <h1>Game Over</h1>
-      <button onClick={() => history.go(0)}>Try Again</button>
-      <button onClick={() => history.push('/')}>Main Menu</button>
+    <div className={styles.modal}>
+      <h1>{content}</h1>
+      <div className={styles.buttons}>
+        <button onClick={() => history.go(0)}>Play Again</button>
+        <button onClick={() => history.push('/')}>Main Menu</button>
+      </div>
     </div>
   );
 };
@@ -44,8 +36,8 @@ const Game = ({ battleField, disabled, status }: GameProps) => {
 
   return (
     <>
-      {status === 'won' && <Won />}
-      {status === 'gameOver' && <GameOver />}
+      {status === 'won' && <Modal content="You Win !" />}
+      {status === 'gameOver' && <Modal content="Game Over" />}
       <div className={classes}>
         <Map data={battleField} />
       </div>

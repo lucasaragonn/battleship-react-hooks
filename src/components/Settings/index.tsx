@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import useLocalStorageState from 'components/hooks/useLocalStorage';
 import { GameContext } from 'components/GameContext';
+import useLocalStorageState from 'components/hooks/useLocalStorage';
+import styles from './settings.module.scss';
 
 const Settings = () => {
   const [state, setState] = useContext(GameContext);
@@ -34,7 +35,7 @@ const Settings = () => {
   };
 
   return (
-    <>
+    <div className={styles.settings}>
       <div>
         <label htmlFor="turns">Turns</label>
         <input
@@ -64,7 +65,7 @@ const Settings = () => {
         <Link to={'/'}>Back</Link>
       </div>
       {validationError !== null ? <div>{validationError}</div> : ''}
-    </>
+    </div>
   );
 };
 

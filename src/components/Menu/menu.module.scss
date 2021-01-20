@@ -1,0 +1,39 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 48px;
+
+  h1 {
+    text-align: center;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    margin-top: 16px;
+    list-style: none;
+    li {
+      cursor: pointer;
+      padding: 16px 30px;
+      border: 1px solid purple;
+      text-align: center;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      
+      &:hover {
+        background-color: white;
+        color: white !important;
+
+      }
+
+      a {
+        text-decoration: none;
+        display: block;
+        color: purple;
+      }
+    }
+
+  }
+}
