@@ -1,21 +1,17 @@
 import { useContext, useEffect, useState } from 'react';
 import { GameContext } from 'components/GameContext';
-
+import useLocalStorageState from './useLocalStorage';
 import {
   createMap,
   gameSetup,
   getRemainingShips,
   updateBattleShip,
 } from 'gameUtils';
-import useLocalStorageState from './useLocalStorage';
 
 const useGame = () => {
-  const [remainingShips, setRemainingShips] = useState(0);
+  const [remainingShips, setRemainingShips] = useState<number>(0);
   const [state, setState] = useContext(GameContext);
-  const [settingsFromStorage, setSettingsFromStorage] = useLocalStorageState(
-    'settings',
-    null
-  );
+  const [settingsFromStorage] = useLocalStorageState('settings', null);
 
   const { battleField, finished, settings } = state;
 
@@ -75,7 +71,7 @@ const useGame = () => {
         }, 100);
       }
     }
-  }, [settings.turns]);
+  }, [settings, state, setState]);
 
   return {
     battleField,

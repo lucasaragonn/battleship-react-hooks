@@ -71,7 +71,9 @@ export const getRemainingShips = (battleFieldShips) => {
     battleFieldShips !== null &&
     Object.entries(battleFieldShips)
       .map((item) => item[1])
-      .filter((bs: any) => bs.isSunk === false); // create interface for { isSunk: boolean }
+      .filter((bs: any) => {
+        return bs.isSunk === false;
+      });
 
   return remainingShips.length;
 };

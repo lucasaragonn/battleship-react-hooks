@@ -1,17 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { IModalContent, statusTypes } from 'components/interfaces';
 import Map from 'components/Map';
 import classnames from 'classnames';
 import styles from './game.module.scss';
-import { GameContext } from 'components/GameContext';
 
 interface GameProps {
-  battleField: [];
+  battleField: [][];
   disabled: boolean;
-  status: 'won' | 'gameOver' | undefined;
+  status: statusTypes;
 }
 
-const Modal = ({ content }: { content: string }) => {
+const Modal = ({ content }: IModalContent) => {
   const history = useHistory();
   return (
     <div className={styles.modal}>
@@ -25,14 +25,10 @@ const Modal = ({ content }: { content: string }) => {
 };
 
 const Game = ({ battleField, disabled, status }: GameProps) => {
-  const [state, setState] = useContext(GameContext);
-
   const classes = classnames({
     [styles.game]: true,
     [styles.gameDisabled]: disabled,
   });
-
-  console.log(status);
 
   return (
     <>

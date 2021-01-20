@@ -1,8 +1,9 @@
+import { ISettings } from 'components/interfaces';
 import React from 'react';
 import styles from './panel.module.scss';
 
 interface PanelProps {
-  settings: { easyMode: boolean; turns: number };
+  settings: ISettings;
   ships: number;
 }
 

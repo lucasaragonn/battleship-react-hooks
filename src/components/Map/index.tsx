@@ -3,17 +3,17 @@ import Cell from 'components/Cell';
 import styles from './map.module.scss';
 
 interface MapProps {
-  data: [];
+  data: [][];
 }
 
 const Map = ({ data }: MapProps) => {
   return (
     <div className={styles.battleField}>
       <div className={styles.row}>
-        {data.map((row: any, i: number) => {
+        {data.map((row, i: number) => {
           return (
             <div style={{ display: 'flex' }} key={i}>
-              {row.map((cell: any, j: number) => {
+              {row.map((cell, j: number) => {
                 return (
                   <div key={j}>
                     <Cell item={cell} />

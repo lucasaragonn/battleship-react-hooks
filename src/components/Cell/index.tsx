@@ -1,14 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { CELL_STATUS, getNextStatus } from 'gameUtils';
 import { GameContext } from 'components/GameContext';
+import { ICell } from 'components/interfaces';
 import classNames from 'classnames';
 import styles from './cell.module.scss';
-
-export interface ICell {
-  id: number;
-  status: number;
-  position?: [number, number];
-}
 
 export interface CellProps {
   item: ICell;
@@ -70,7 +65,7 @@ const Cell = ({ item }: CellProps) => {
         setSunk(true);
       }
     }
-  }, [state.battleFieldShips]);
+  }, [state.battleFieldShips, cell]);
 
   const onClick = (c: ICell) => {
     const newStatus = getNextStatus(c.status);
@@ -93,4 +88,4 @@ const Cell = ({ item }: CellProps) => {
   );
 };
 
-export default Cell;
+export default React.memo(Cell);

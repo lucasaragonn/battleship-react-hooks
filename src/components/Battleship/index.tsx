@@ -1,8 +1,8 @@
 import React from 'react';
 import Panel from 'components/Panel';
 import Game from '../Game';
-import styles from './index.module.scss';
 import useGame from 'components/hooks/useGame';
+import styles from './battleship.module.scss';
 
 const Battleship = () => {
   const {

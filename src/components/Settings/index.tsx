@@ -6,9 +6,9 @@ import styles from './settings.module.scss';
 
 const Settings = () => {
   const history = useHistory();
-  const [state, setState] = useContext(GameContext);
-  const [inputV, setInputV] = useState(state.settings.turns);
-  const [msg, setMsg] = useState('');
+  const [state] = useContext(GameContext);
+  const [inputV, setInputV] = useState<number>(state.settings.turns);
+  const [msg, setMsg] = useState<string>('');
 
   const [settings, setSettings] = useLocalStorageState(
     'settings',
@@ -18,10 +18,6 @@ const Settings = () => {
   useEffect(() => {
     setInputV(settings.turns);
   }, [settings.turns]);
-
-  useEffect(() => {
-    console.log('saved !');
-  }, [settings]);
 
   const save = () => {
     if (inputV < 20 || inputV % 1 !== 0) {
@@ -54,7 +50,7 @@ const Settings = () => {
             min="0"
             step="1"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setInputV(e.currentTarget.value)
+              setInputV(Number(e.currentTarget.value))
             }
             disabled={settings.easyMode}
           />
