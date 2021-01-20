@@ -83,7 +83,7 @@ const Cell = ({ item }: CellProps) => {
 
   return (
     <div className={classes} onClick={() => onClick(cell)}>
-      <div className="status">{cell.id}</div>
+      <div className="status"></div>
     </div>
   );
 };
