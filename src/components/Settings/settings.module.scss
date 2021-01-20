@@ -1,4 +1,49 @@
 .settings {
   display: flex;
   flex-direction: column;
+
+  h1 {
+    text-align: center;
+  }
+
+  .form {
+    text-transform: uppercase;
+    justify-content: center;
+    margin-left: 16px;
+    margin-right: 16px;
+    display: flex;
+    flex-direction: column;
+    
+
+    .control {
+      padding: 16px;
+      background-color: purple;
+      color: gold;
+    }
+
+    input[type=number] {
+      border: 1px solid gold;
+      width: 60px;
+      background-color: purple;
+      padding: 8px 15px;
+      padding-left: 30px;
+      color: gold;
+      margin-left: 52px;
+      font-size: 20px;
+    }
+
+    input[type=checkbox] {
+      font-size: 20px;
+      margin-left: 16px;
+    }
+
+    button {
+      border: 1px solid gold;
+      background-color: purple;
+      text-transform: uppercase;
+      padding: 16px 30px;
+      cursor: pointer;
+      color: gold
+    }
+  }
 }
