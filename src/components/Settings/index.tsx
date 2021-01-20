@@ -8,7 +8,7 @@ const Settings = () => {
   const history = useHistory();
   const [state, setState] = useContext(GameContext);
   const [inputV, setInputV] = useState(state.settings.turns);
-  const [validationError, setValidationError] = useState(null);
+  const [msg, setMsg] = useState('');
 
   const [settings, setSettings] = useLocalStorageState(
     'settings',
@@ -19,13 +19,18 @@ const Settings = () => {
     setInputV(settings.turns);
   }, [settings.turns]);
 
+  useEffect(() => {
+    console.log('saved !');
+  }, [settings]);
+
   const save = () => {
-    if (inputV < 10 || inputV % 1 !== 0) {
-      return setValidationError(
+    if (inputV < 20 || inputV % 1 !== 0) {
+      return setMsg(
         'You need to enter at least 20 turns and has to be an integer'
       );
     }
     setSettings({ ...settings, turns: inputV });
+    setMsg('Saved!');
   };
 
   const updateMode = () => {
@@ -68,7 +73,7 @@ const Settings = () => {
         <button onClick={save}>Save</button>
         <button onClick={() => history.push('/')}>Back</button>
       </div>
-      {validationError !== null ? <div>{validationError}</div> : ''}
+      {msg !== null ? <div className={styles.message}>{msg}</div> : ''}
     </div>
   );
 };

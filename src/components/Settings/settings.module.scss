@@ -2,8 +2,27 @@
   display: flex;
   flex-direction: column;
 
+  @media(min-width: 768px) {
+    margin-left: 64px;
+    margin-right: 64px;
+  }
+
+  @media(min-width: 768px) {
+    margin-left: 108px;
+    margin-right: 108px;
+  }
+
+  @media(min-width: 1200px) {
+    margin: 0 auto;
+    width: 768px;
+  }
+
   h1 {
     text-align: center;
+  }
+
+  .message {
+    padding: 22px;
   }
 
   .form {
@@ -38,12 +57,18 @@
     }
 
     button {
-      border: 1px solid gold;
-      background-color: purple;
+      border: 1px solid purple;
+      background-color: gold;
       text-transform: uppercase;
       padding: 16px 30px;
       cursor: pointer;
-      color: gold
+      color: purple;
+      margin: 4px;
+
+      &:hover {
+        background-color: purple;
+        color: gold;
+      }
     }
   }
 }
